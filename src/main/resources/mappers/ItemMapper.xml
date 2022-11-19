@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace：該XML文件對應的介面 -->
+<mapper namespace="tw.tedu.inventory.mapper.ItemMapper">
+	
+	<!-- 寫入比對頁面右側欄位 -->
+    <!-- Integer insert(Item item); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="iid">
+        INSERT INTO s_item (
+            iid,cid,
+            content,coid
+        ) VALUES (
+            #{iid}, #{cid},
+            #{content},#{coid}
+        )
+    </insert>
+
+    <!-- 寫入比對頁面左側欄位 -->
+    <!--  Integer insertIC(ItemColumn column); -->
+    <insert id="insertIC" useGeneratedKeys="true" keyProperty="icid">
+        INSERT INTO s_itemcolumn (
+            icid,storeurl,
+            courl,checkid,
+            icstate,iccoid
+        ) VALUES (
+            #{icid}, #{storeurl},
+            #{courl},#{checkid},
+            #{icstate},#{iccoid}
+        )
+    </insert>
+
+    <!-- 寫入比對頁面商店庫存欄位 -->
+    <!--  Integer insertSI(StoreItem storeItem) -->
+    <insert id="insertSI" useGeneratedKeys="true" keyProperty="siid">
+        INSERT INTO s_storeitem (
+            siid,sicid,
+            sicontent,sicoid
+        ) VALUES (
+            #{siid}, #{sicid},
+            #{sicontent},#{sicoid}
+        )
+    </insert>
+
+    <!-- 將狀態寫入網頁的日誌 -->
+    <!--  Integer insertLog(Logwriter logwriter) -->
+    <insert id="insertLog" useGeneratedKeys="true" keyProperty="logId">
+        INSERT INTO s_log (
+            log_id,log_username,
+            do_action,log_obj,
+            exe_time
+        ) VALUES (
+            #{logId}, #{logUsername},
+            #{doAction},#{logObj},
+            #{exeTime}
+        )
+    </insert>
+        
+   
+    <!-- 根據Coname查詢廠商資料 -->
+    <!-- Company findByConame(String coname) -->
+    <select id="findCoByConame"
+        resultType="tw.tedu.inventory.entity.Company">
+        SELECT
+            id,coname,
+            coid
+        FROM 
+            s_co
+        WHERE 
+            coname=#{coname}
+    </select>
+
+    <!-- 根據coid查詢廠商資料 -->
+    <!-- Company findCoByCoid(Integer coid) -->
+    <select id="findCoByCoid"
+            resultType="tw.tedu.inventory.entity.Company">
+        SELECT
+            id,coname,
+            coid
+        FROM
+            s_co
+        WHERE
+            coid=#{coid}
+    </select>
+
+    <!-- 根據coid查詢更新資料 -->
+    <!-- Item findItemByCoid(Integer coid) -->
+    <select id="findItemByCoid" resultType="tw.tedu.inventory.entity.Item">
+        SELECT
+            iid,cid,
+            content,coid
+        FROM
+            s_item
+        WHERE
+            coid=#{coid}
+        ORDER BY
+            coid DESC
+    </select>
+
+    <!-- 根據coid查詢選項欄位資料 -->
+    <!-- List<ItemColumn> findItemColumnByCoid(Integer iccoid) -->
+    <select id="findItemColumnByiccoid" resultType="tw.tedu.inventory.entity.ItemColumn">
+        SELECT
+            icid,storeurl,
+            courl,checkid,
+            icstate,iccoid
+        FROM
+            s_itemcolumn
+        WHERE
+            iccoid=#{iccoid}
+    </select>
+
+    <!-- 根據iccoid及checkid查詢選項欄位資料 -->
+    <!-- List<ItemColumn> findItemColumnByiccoidAndCheckid(Integer iccoid,Integer checkid) -->
+    <select id="findItemColumnByiccoidAndCheckid" resultType="tw.tedu.inventory.entity.ItemColumn">
+        SELECT
+            icid,storeurl,
+            courl,checkid,
+            icstate,iccoid
+        FROM
+            s_itemcolumn
+        WHERE
+             iccoid=#{iccoid} AND checkid=#{checkid}
+    </select>
+
+    <!-- 根據iccoid查詢商店庫存資料 -->
+    <!-- List<ItemColumn> findStoreItemBysicoid(Integer sicoid) -->
+    <select id="findStoreItemBysicoid" resultType="tw.tedu.inventory.entity.StoreItem">
+        SELECT
+            siid,sicid,
+            sicontent,sicoid
+        FROM
+            s_storeitem
+        WHERE
+            sicoid=#{sicoid}
+        ORDER BY
+            siid
+    </select>
+
+    <!-- 根據sicoid及checkid查詢商店庫存資料 -->
+    <!-- List<ItemColumn> findStoreItemBysicoid(Integer sicoid) -->
+    <select id="findStoreItemBysicoidandCI" resultType="tw.tedu.inventory.entity.StoreItem">
+        SELECT
+            siid,sicid,
+            sicontent,sicoid
+        FROM
+            s_storeitem
+        WHERE
+            sicid=#{sicid} AND sicoid=#{sicoid}
+        ORDER BY
+            siid
+    </select>
+
+
+
+    <!-- 根据未刪除查询使用者資訊 -->
+    <!-- List<User> findByIsdelete(Integer idDelete) -->
+    <select id="findByisDelete"
+            resultType="tw.tedu.inventory.entity.UserI">
+        SELECT
+            uid,username,
+            permissions,
+            is_delete AS isDelete
+        FROM
+            s_user
+        WHERE
+            is_delete=0
+    </select>
+
+    <!-- 透過logid查詢及排列網頁日誌顯示 -->
+    <!-- List<Logwriter> findWebLog() -->
+    <select id="findWebLog" resultType="tw.tedu.inventory.entity.Logwriter">
+        SELECT
+            log_id AS logId,log_username AS logUsername,
+            do_action AS doAction,log_obj AS logObj,
+            exe_time AS exeTime
+        FROM
+            s_log
+    </select>
+
+    <delete id="deleteByUid">
+        DELETE FROM
+            s_user
+        WHERE
+            uid=#{uid}
+    </delete>
+
+    <!-- 清空s_item表格 -->
+    <!--  Integer deleteSItemTable() -->
+    <delete id="deleteSItemTable">
+        DELETE FROM
+            s_item
+        WHERE
+            coid=#{coid}
+    </delete>
+
+    <!-- 透過CheckId刪除對應的比對頁面的選項欄位 -->
+    <!--  Integer delICByCheckId(Integer checkId) -->
+    <delete id="delICByCheckId">
+        DELETE FROM
+            s_itemcolumn
+        WHERE
+            checkid=#{checkid} AND iccoid=#{iccoid}
+    </delete>
+
+    <!-- 透過Sicid,Sicoid刪除對應的比對頁面商店欄位 -->
+    <!--  Integer delSIBySicid(@Param("sicid")Integer sicid,
+                           @Param("sicoid")Integer sicoid); -->
+    <delete id="delSIBySicid">
+        DELETE FROM
+            s_storeitem
+        WHERE
+            sicid=#{sicid} AND sicoid=#{sicoid}
+    </delete>
+
+    <!-- 透過cid,coid刪除對應的比對頁面新資料欄位 -->
+    <!--  Integer delIByCid(@Param("cid")Integer cid,
+                         @Param("coid")Integer coid); -->
+    <delete id="delIByCid">
+        DELETE FROM
+            s_item
+        WHERE
+            cid=#{cid} AND coid=#{coid}
+    </delete>
+
+    <!-- 透過 checkid以及iccoid定位修改商品的storeurl以及courl -->
+    <!--  Integer updateItemColumn(@Param("checkid")Integer checkid,
+                                    @Param("iccoid")Integer iccoid,
+                                    @Param("storeurl")String storeurl,
+                                    @Param("courl")String courl) -->
+    <update id="updateItemColumn">
+        UPDATE
+            s_itemcolumn
+        SET
+            storeurl=#{storeurl},courl=#{courl}
+        WHERE
+            checkid=#{checkid} AND iccoid=#{iccoid}
+    </update>
+
+    <!-- 透過sicid以及sicoid比對商品做修改 -->
+    <!--  Integer updateStoreItem(@Param("sicid")Integer sicid,
+                            @Param("sicoid")Integer sicoid) -->
+    <update id="updateStoreItem">
+        UPDATE
+            s_storeitem
+        SET
+            sicontent=#{sicontent}
+        WHERE
+            siid=#{siid} AND sicid=#{sicid} AND  sicoid=#{sicoid}
+    </update>
+
+
+
+
+
+
+</mapper>
+
+
+
+
+
+

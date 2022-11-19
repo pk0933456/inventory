@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=1">
+    <title>庫存系統｜系統使用說明</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="plugins/jsgrid/jsgrid.min.css">
+    <link rel="stylesheet" href="plugins/jsgrid/jsgrid-theme.min.css">
+    <link rel="icon" href="dist/img/AdminLTELogo.png" type="image/x-icon"/>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <div class="main-header navbar navbar-expand navbar-white navbar-light" >
+        <!-- Left navbar links -->
+        <div class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </div>
+        <!-- Right navbar links -->
+        <div class="navbar-nav ml-auto" id="mainbar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="info">系統時間:</div>
+            <div class="info">&nbsp&nbsp&nbsp&nbsp</div>
+            <div id="nowDiv" class="info"></div>
+            <div class="info">&nbsp&nbsp&nbsp&nbsp</div>
+            <div class="info" id="barname">
+                <a>歡迎使用者:</a>
+            </div>
+            <div class="info">&nbsp&nbsp&nbsp&nbsp</div>
+            <div class="info">
+                <a id="menu-username" class="d-block">-&nbsp&nbsp-</a>
+            </div>
+            <div class="info">&nbsp&nbsp&nbsp&nbsp</div>
+            <div class="info" id="barlogout">
+                <a onclick="javascript:return logout();" class="d-block">登出</a>
+            </div>
+            <div class="info">&nbsp&nbsp&nbsp&nbsp</div>
+        </div>
+    </div>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside id="lockIC" class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a class="brand-link">
+            <img src="dist/img/AdminLTELogo.png"  class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">庫存系統</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column"  data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item menu-open">
+                        <a  class="nav-link">
+                            <i class="fa fa-database  nav-icon"></i>
+                            <p>比對管理</p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/home.html" class="nav-link">
+                                    <p>&emsp;</p>
+                                    <i class="fa thin fa-angle-right"></i>
+                                    <p>&emsp;更新狀態</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/comparison.html" class="nav-link">
+                                    <p>&emsp;</p>
+                                    <i class="fa thin fa-angle-right"></i>
+                                    <p>&emsp;庫存比對管理</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <nav class="mt-4">
+                <ul class="nav nav-pills nav-sidebar flex-column"  data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item menu-open">
+                        <a class="nav-link">
+                            <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                            <p>系統管理</p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a  href="/userpage.html" class="nav-link">
+                                    <p>&emsp;</p>
+                                    <i class="fa thin fa-angle-right"></i>
+                                    <p>&emsp;使用者管理</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/info.html" class="nav-link  active">
+                                    <p>&emsp;</p>
+                                    <i class="fa thin fa-angle-right"></i>
+                                    <p>&emsp;系統使用說明</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <section class="content">
+            <div class="card-body">
+                <img class="img-fluid pad" src="images/info01.png" alt="Photo">
+            </div>
+            <div class="card-body">
+                <img class="img-fluid pad" src="images/info02.png" alt="Photo">
+            </div>
+            <div class="card-body">
+                <img class="img-fluid pad" src="images/info03.png" alt="Photo">
+            </div>
+            <div class="card-body">
+                <img class="img-fluid pad" src="images/info04.png" alt="Photo">
+            </div>
+            <div class="card-body">
+                <img class="img-fluid pad" src="images/info05.png" alt="Photo">
+            </div>
+            <div class="card-body">
+                <img class="img-fluid pad" src="images/info06.png" alt="Photo">
+            </div>
+        </section>
+        <!-- /.content -->
+
+
+        <!-- Main Footer -->
+        <footer>
+
+        </footer>
+    </div>
+</div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- jsGrid -->
+    <script src="plugins/jsgrid/demos/db.js"></script>
+    <script src="plugins/jsgrid/jsgrid.min.js"></script>
+    <!-- Page specific script -->
+    <script type="text/javascript">
+		$(document).ready(function(){
+		    barTime();
+		    showUsername();
+		    showUserInfo();
+		});
+
+		function logout() {
+            var msg = "您真的確定要登出嗎？\n\n如果要登出請按下 確認！";
+            if (confirm(msg)==true){
+                return location.href='/logout';
+            }else{
+                return false;
+            }
+        }
+
+		function del(uid) {
+            var msg = "您真的確定要刪除嗎？\n\n如果要刪除請按下 確認！";
+            if (confirm(msg)==true){
+                return deleteByUid(uid);
+            }else{
+                return false;
+            }
+        }
+
+		function deleteByUid(uid){
+		    $.ajax({
+                "url":"/users/" + uid + "/delete",
+                "type":"POST",
+                "dataType":"json",
+                "success":function(json){
+                    if(json.state == 2000){
+                        showUserInfo();
+                }else{
+                    alert("json.messages")
+                  }
+               }
+            });
+		}
+
+		function showUserInfo(){
+		    $.ajax({
+                "url":"/users/get_info",
+                "type":"get",
+                "dataType":"json",
+                "success":function(json){
+                    var list = json.data;
+                    $("#users-list").empty();
+                    for(var i=0; i<list.length; i++){
+                        var html = '<tr>'
+                                    +'<td>#{uid}</td>'
+                                    +'<td>#{username}</td>'
+                                    +'<td><button onclick="javascript:return del(#{uid});" type="button" class="btn btn-danger btn-sm">刪除</button></td>'
+                                    +'</tr>';
+                        html = html.replace(/#{uid}/g,list[i].uid);
+                        html = html.replace(/#{username}/g,list[i].username);
+
+                        $("#users-list").append(html);
+                    }
+                }
+            });
+		}
+
+		function showUsername(){
+		    $.ajax({
+                "url":"/users/userLogin",
+                "type":"get",
+                "dataType":"json",
+                "success":function(json){
+                    var menuname = json.data;
+                    $("#menu-username").empty();
+                    var a = menuname.username;
+                    $("#menu-username").append(a);
+                }
+            });
+		}
+
+		function barTime(){
+            var date = new Date();
+            var now = "";
+            now = date.getFullYear()+"年";
+            now = now + (date.getMonth()+1)+"月";
+            now = now + date.getDate()+"日  ";
+            now = now + date.getHours()+"時";
+            now = now + date.getMinutes()+"分";
+            now = now + date.getSeconds()+"秒";
+            document.getElementById("nowDiv").innerHTML = now;
+            setTimeout("barTime()",1000);
+        }
+    </script>
+    <style type="text/css">
+			#lockIC {
+				position: fixed;
+			}
+    </style>
+    <style type="text/css">
+			html{
+              font-size: 16px;
+            }
+            @media (min-width: 100px) and (max-width: 767px) {
+              #barname,barlogout,mainbar1 {
+                float: left;
+              }
+              #mainbar1 {
+                height:auto;
+              }
+            }
+
+            @media (min-width: 768px) and (max-width: 1200px) {
+              html {
+               font-size: calc(1rem + (1.3-1.2) * ((100vw - 600px) / (1200 - 600)));
+              }
+            }
+            @media (min-width: 1200px) {
+              html {
+                 font-size: 1rem;
+              }
+            }
+    </style>
+</body>
+</html>

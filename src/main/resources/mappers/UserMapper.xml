@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- namespace：該XML文件對應的介面 -->
+<mapper namespace="tw.tedu.inventory.mapper.UserMapper">
+	
+	<!-- 插入使用者資料 -->
+    <!-- Integer insert(User user) -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO s_user (
+            username, password,
+            salt, permissions,
+            is_delete,
+            created_user, created_time,
+            modified_user, modified_time
+        ) VALUES (
+            #{username}, #{password},
+            #{salt}, #{permissions},
+            #{isDelete},
+            #{createdUser}, #{createdTime},
+            #{modifiedUser}, #{modifiedTime}
+        )
+    </insert>
+        
+   
+    <!-- 根据使用者查询使用者資訊 -->
+    <!-- User findByUsername(String username) -->
+    <select id="findByUsername"
+        resultType="tw.tedu.inventory.entity.UserI">
+        SELECT 
+            uid,username,
+            password,salt,permissions,
+            is_delete AS isDelete
+        FROM 
+            s_user 
+        WHERE 
+            username=#{username}
+    </select>
+
+    <select id="findByUid" resultType="tw.tedu.inventory.entity.UserI">
+        SELECT
+            username,password,
+            salt,permissions,
+            is_delete AS isDelete
+        FROM
+            s_user
+        WHERE
+            uid=#{uid}
+    </select>
+
+    <!-- 根据未刪除查询使用者資訊 -->
+    <!-- List<User> findByIsdelete(Integer idDelete) -->
+    <select id="findByisDelete"
+            resultType="tw.tedu.inventory.entity.UserI">
+        SELECT
+            uid,username,
+            permissions,
+            is_delete AS isDelete
+        FROM
+            s_user
+        WHERE
+            is_delete=0
+    </select>
+
+    <delete id="deleteByUid">
+        DELETE FROM
+            s_user
+        WHERE
+            uid=#{uid}
+    </delete>
+
+    <update id="updateInfo">
+        UPDATE
+            s_user
+        SET
+            username=#{username},
+            permissions=#{permissions},
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE
+            uid=#{uid}
+    </update>
+
+
+
+</mapper>
+
+
+
+
+
+
